@@ -54,12 +54,12 @@ public class ProjetoJpaApplication implements CommandLineRunner {
 		}while(choice != 5);
 	}
 	
-	private void choiceMenu() {
+	private static void choiceMenu() {
 		System.out.println("1 - Cadastrar Cabra: "
-				+ "\n2 - Pesquisar Cabra: "
-				+ "\n3 - Cadastrar Medicamento: "
-				+ "\n4 - Pesquisar Medicamento: "
-				+ "\n5 - Sair:\n");
+						+ "\n2 - Pesquisar Cabra: "
+						+ "\n3 - Cadastrar Medicamento: "
+						+ "\n4 - Pesquisar Medicamento: "
+						+ "\n5 - Sair:\n");
 	}
 	
 	private void registerNewGoat() {
