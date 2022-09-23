@@ -21,7 +21,7 @@ public class GoatController {
 		goatService.creatGoat(nickname, birthDay, description, gender);
 	}
 	
-	public Goat readForID(Integer id) {
+	public Goat readForID(Integer id) throws Exception {
 		return goatService.readGoatForID(id);
 	}
 	
@@ -29,16 +29,12 @@ public class GoatController {
 		return goatService.listGoat();
 	}
 	
-	public void update(Integer id, String nickname, Date birthDay, String description, EnumGender gender) {
-		Goat goat = readForID(id);
-		goat.setNickname(nickname);
-		goat.setBirthDay(birthDay);
-		goat.setDescription(description);
-		goat.setGender(gender);
+	public void update(Integer id, String nickname, String birthDay, String description, String gender) throws Exception {
+		goatService.updateGoat(id, nickname, birthDay, description, gender);
 	}
 	
-	public void delete(Integer id) {
-//		goatRepository.deleteById(id);;
+	public void delete(Integer id) throws Exception {
+		goatService.deleteGoat(id);
 	}
 			
 }

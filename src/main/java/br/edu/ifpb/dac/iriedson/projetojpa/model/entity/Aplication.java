@@ -52,7 +52,7 @@ public class Aplication implements Serializable{
 		this.aplicationMode = aplicationMode;
 		this.medicine = medicine;
 		this.goat = goat;
-		this.date = new Date();
+		this.date = date;
 	}
 
 	//Get's and Set's'

@@ -37,11 +37,7 @@ public class Medicine implements Serializable{
     //Construtores
     public Medicine() {}
 
-	public Medicine(String name, String aplicationMode) {
-		this.name = name;
-	}
-
-	public Medicine(String name, String aplicationMode, String description) {
+	public Medicine(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}

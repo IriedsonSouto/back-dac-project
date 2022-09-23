@@ -1,8 +1,5 @@
 package br.edu.ifpb.dac.iriedson.projetojpa.model.services;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,60 +8,48 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.iriedson.projetojpa.model.dao.GoatRepositoryDAO;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Goat;
-import br.edu.ifpb.dac.iriedson.projetojpa.model.enums.EnumGender;
+
 
 @Service
 public class GoatService {
 
 	@Autowired
 	private GoatRepositoryDAO goatRepository;
+	@Autowired
+	private ValidationService validationService;
 	
+	//Metodos crud
 	public void creatGoat(String nickname, String birthDay, String description, String gender) throws Exception {
-		Goat goat = new Goat(nameValidation(nickname), dateValidation(birthDay)
-							, description, genderValidation(gender));
+		Goat goat = new Goat(validationService.nameValidation(nickname), validationService.dateValidation(birthDay)
+							, description, validationService.genderValidation(gender));
 		goatRepository.save(goat);
 	}
 	
-	public Goat readGoatForID(Integer id) {
+	public Goat readGoatForID(Integer id) throws Exception {
 		Optional<Goat> goat = goatRepository.findById(id);
-		goat.orElseThrow(IllegalArgumentException::new);
-		return goat.get();
+		if(goat.isPresent()) {
+			return goat.get();
+		}
+		throw new Exception("Bode não encontrado invalido!");
 	}
 	
 	public List<Goat> listGoat() {
 		return (List<Goat>) goatRepository.findAll();
 	}
 	
-	public String nameValidation(String nickname) throws Exception {
-		if(nickname.matches("[A-Za-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ'\\s]")) {
-			return nickname;
-		}
-		throw new Exception("Apelido invalido!");		
+	public void updateGoat(Integer id, String nickname, String birthDay, String description, String gender) throws Exception {
+		Goat goat = readGoatForID(id);
+		goat.setNickname(nickname);
+		goat.setBirthDay(validationService.dateValidation(birthDay));
+		goat.setDescription(description);
+		goat.setGender(validationService.genderValidation(gender));
+		goatRepository.save(goat);
 	}
 	
-	public Date dateValidation(String birthDay) throws Exception {
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");  
-		Date date = formato.parse("23/11/2015");
-		if(date.getTime() > new Date().getTime()) {
-			throw new Exception("Data invalida!");
-		}
-		return date;
+	public void deleteGoat(Integer id) throws Exception {
+		Goat goat = readGoatForID(id);
+		goatRepository.delete(goat);
+//		goatRepository.deleteById(id);
 	}
-	
-	public EnumGender genderValidation(String gender) throws Exception {
-		if(gender.toUpperCase().equals("MASCULINO")) {
-			return EnumGender.MALE;
-		}else if (gender.toUpperCase().equals("FEMININO")) {
-			return EnumGender.FEMALE;
-		}
-		throw new Exception("Genero invalido!");
-	}
-	
-	
-	
-	
-	
-	
-	
 	
 }
