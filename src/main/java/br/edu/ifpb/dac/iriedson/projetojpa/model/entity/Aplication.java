@@ -48,11 +48,11 @@ public class Aplication implements Serializable{
     //Construtores
 	public Aplication() {}
 
-	public Aplication(EnumAplicationMode aplicationMode, Medicine medicine, Goat goat, Date date) {
+	public Aplication(EnumAplicationMode aplicationMode, Date date, Goat goat, Medicine medicine) {
 		this.aplicationMode = aplicationMode;
-		this.medicine = medicine;
-		this.goat = goat;
 		this.date = date;
+		setGoat(goat);
+		setMedicine(medicine);
 	}
 
 	//Get's and Set's'
@@ -113,8 +113,8 @@ public class Aplication implements Serializable{
 
 	@Override
 	public String toString() {
-		return "* Medicine: " + medicine.getName() + ",  Aplication Mode: " + aplicationMode 
-				+ ", Goat: " + goat.getNickname() + ", Date:" + date + ".";
+		return "* Medicine: " + medicine.getName() + ",  |Aplication Mode: " + aplicationMode 
+				+ ", |Goat: " + goat.getNickname() + ", |Date:" + date + ".";
 	}
     
     

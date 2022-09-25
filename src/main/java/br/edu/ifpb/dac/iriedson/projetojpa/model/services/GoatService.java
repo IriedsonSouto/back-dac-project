@@ -25,7 +25,7 @@ public class GoatService {
 		goatRepository.save(goat);
 	}
 	
-	public Goat readGoatForID(Integer id) throws Exception {
+	public Goat readGoatByID(Integer id) throws Exception {
 		Optional<Goat> goat = goatRepository.findById(id);
 		if(goat.isPresent()) {
 			return goat.get();
@@ -38,8 +38,8 @@ public class GoatService {
 	}
 	
 	public void updateGoat(Integer id, String nickname, String birthDay, String description, String gender) throws Exception {
-		Goat goat = readGoatForID(id);
-		goat.setNickname(nickname);
+		Goat goat = readGoatByID(id);
+		goat.setNickname(validationService.nameValidation(nickname));
 		goat.setBirthDay(validationService.dateValidation(birthDay));
 		goat.setDescription(description);
 		goat.setGender(validationService.genderValidation(gender));
@@ -47,7 +47,7 @@ public class GoatService {
 	}
 	
 	public void deleteGoat(Integer id) throws Exception {
-		Goat goat = readGoatForID(id);
+		Goat goat = readGoatByID(id);
 		goatRepository.delete(goat);
 //		goatRepository.deleteById(id);
 	}

@@ -1,13 +1,11 @@
 package br.edu.ifpb.dac.iriedson.projetojpa.control;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Goat;
-import br.edu.ifpb.dac.iriedson.projetojpa.model.enums.EnumGender;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.services.GoatService;
 
 @Controller
@@ -22,7 +20,7 @@ public class GoatController {
 	}
 	
 	public Goat readForID(Integer id) throws Exception {
-		return goatService.readGoatForID(id);
+		return goatService.readGoatByID(id);
 	}
 	
 	public List<Goat> list() {

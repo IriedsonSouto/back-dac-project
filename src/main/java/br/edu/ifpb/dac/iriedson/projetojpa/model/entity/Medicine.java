@@ -85,6 +85,6 @@ public class Medicine implements Serializable{
 
 	@Override
 	public String toString() {
-		return "* Name:" + name + ", ID: " + id + ", Description: " + description + ".";
+		return "* Name:" + name + ", |ID: " + id + ", |Description: " + description + ".";
 	}
 }

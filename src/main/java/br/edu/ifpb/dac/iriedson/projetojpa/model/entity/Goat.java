@@ -116,8 +116,8 @@ public class Goat implements Serializable{
 
 	@Override
 	public String toString() {
-		return "* Nickname: " + nickname + "Gender: " + gender + ", ID: " + id 
-				+ ", BirthDate: " + birthDay + ", Description: " + description + ".";
+		return "* Nickname: " + nickname + " |Gender: " + gender + ", |ID: " + id 
+				+ ", |BirthDate: " + birthDay + ", |Description: " + description + ".";
 	}
 	
 }
