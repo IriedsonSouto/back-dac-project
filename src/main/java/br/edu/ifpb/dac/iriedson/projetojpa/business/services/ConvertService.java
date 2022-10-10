@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Aplication;
@@ -21,8 +22,10 @@ import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.MedicineSendDTO;
 public class ConvertService {
 
 	@Autowired
+	@Lazy
 	private GoatService goatService;
 	@Autowired
+	@Lazy
 	private MedicineService medicineService;
 	@Autowired
 	private ValidationService validationService;
