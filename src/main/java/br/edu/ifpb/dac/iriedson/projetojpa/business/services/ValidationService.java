@@ -1,4 +1,4 @@
-package br.edu.ifpb.dac.iriedson.projetojpa.model.services;
+package br.edu.ifpb.dac.iriedson.projetojpa.business.services;
 
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
