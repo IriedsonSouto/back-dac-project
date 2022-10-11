@@ -53,8 +53,10 @@ public class GoatController {
 			GoatSendDTO goatSend = new GoatSendDTO();
 			goatSend.setId(id);
 			goatSend.setNickname(name);
-			goatSend.setBirthDay(validationService.dateValidation(date));
-			goatSend.setGender(validationService.genderValidation(gender));
+			if(date != null)
+				goatSend.setBirthDay(validationService.dateValidation(date));
+			if(gender != null)
+				goatSend.setGender(validationService.genderValidation(gender));
 			
 			List<Goat> goats = goatService.getGoatByParam(goatSend);
 			List<GoatSendDTO> goatsSend = convertService.goatToGoatSendDTO(goats);

@@ -54,8 +54,10 @@ public class AplicationController {
 		try{
 			AplicationSendDTO aplicationSend = new AplicationSendDTO();
 			aplicationSend.setId(id);
-			aplicationSend.setAplicationMode(validationService.aplicationModeValidation(aplicationMode));
-			aplicationSend.setDate(validationService.dateValidation(date));
+			if(aplicationMode != null)
+				aplicationSend.setAplicationMode(validationService.aplicationModeValidation(aplicationMode));
+			if(date != null)
+				aplicationSend.setDate(validationService.dateValidation(date));
 			aplicationSend.setGoatId(goatId);
 			aplicationSend.setMedicineId(medicineId);
 			
