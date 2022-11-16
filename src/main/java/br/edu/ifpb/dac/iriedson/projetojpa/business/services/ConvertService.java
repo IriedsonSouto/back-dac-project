@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Aplication;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Goat;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Medicine;
+import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.SystemRole;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.User;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.AplicationNewDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.AplicationSendDTO;
@@ -19,7 +20,7 @@ import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.GoatSendDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.MedicineNewDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.MedicineSendDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.UserNewDTO;
-import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.UserSendDTO;
+
 
 @Service
 public class ConvertService {
@@ -110,30 +111,40 @@ public class ConvertService {
 	}
 	
 	//Goat convert
-	public User userNewDtoToUser(UserNewDTO userNewDto) throws Exception {
-		return new User(userNewDto.getEmail()
+	public User userNewDtoToUser(UserNewDTO userNewDto){
+		return new User(userNewDto.getId()
+						,userNewDto.getEmail()
 						,userNewDto.getName()
+						,userNewDto.getUsername()
 						,userNewDto.getPassword());
 	}
 	
-	public User userSendDtoToUser(UserSendDTO userSendDto) throws Exception {
-		User user = new User();
-		user.setName(userSendDto.getName());
-		user.setEmail(userSendDto.getEmail());
+	public UserNewDTO userToUserNewDto(User user){
+		UserNewDTO dto = new UserNewDTO();
 		
-		return user;
-	}
-	
-	public UserSendDTO userToUserSendDTO(User user) {
-		return new UserSendDTO(user);
-	}
-	
-	public List<UserSendDTO> userToUserSendDTO(List<User> users) {
-		List<UserSendDTO> usersSend = new ArrayList<>(); 
-		for(User user: users) {
-			usersSend.add(userToUserSendDTO(user));
+		dto.setId(user.getId());
+		dto.setName(user.getName());
+		dto.setUsername(user.getUsername());
+		dto.setEmail(user.getEmail());
+		
+		List<String> roles = new ArrayList<>();
+		if(user.getRoles() != null) {
+			for (SystemRole role : user.getRoles()) {
+				roles.add(role.getName());
+			}
 		}
-		return usersSend;
+		dto.setRoles(roles.toArray(new String[0]));
+		return dto; 
+	}
+	
+	
+	public List<UserNewDTO> listUserToDTO(List<User> users) {
+		List<UserNewDTO> dtos = new ArrayList<>();
+		
+		for (User user : users) {
+			dtos.add(userToUserNewDto(user));
+		}	
+		return dtos;
 	}
 	
 }

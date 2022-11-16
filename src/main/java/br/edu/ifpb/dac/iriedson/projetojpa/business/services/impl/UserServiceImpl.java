@@ -11,6 +11,7 @@ import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import br.edu.ifpb.dac.iriedson.projetojpa.business.services.AuthenticationService;
 import br.edu.ifpb.dac.iriedson.projetojpa.business.services.PasswordEnconderService;
 import br.edu.ifpb.dac.iriedson.projetojpa.business.services.SystemRoleService;
 import br.edu.ifpb.dac.iriedson.projetojpa.business.services.UserService;
@@ -29,6 +30,8 @@ public class UserServiceImpl implements UserService{
 	private SystemRoleService systemRoleService;
 	@Autowired
 	private PasswordEnconderService passwordEnconderService;
+	@Autowired
+	private AuthenticationService authenticationService;
 	
 	@Override
 	public User save(User user) {
@@ -63,8 +66,9 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		User user = findById(id);
+		User loggedUser = authenticationService.getLoggedUser();
 		
-		if(user == null) {
+		if(user == null || user.getId() != loggedUser.getId()) {
 			throw new IllegalStateException(String.format("Entity not find"));
 		}
 		
