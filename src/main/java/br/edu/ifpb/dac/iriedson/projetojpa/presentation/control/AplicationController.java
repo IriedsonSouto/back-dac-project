@@ -70,6 +70,16 @@ public class AplicationController {
 		}
 	}	
 	
+	@GetMapping("{id}")
+	public ResponseEntity findById(@PathVariable("id") Integer id) {
+		try{
+			Aplication aplication = aplicationService.readAplicationByID(id);
+			return ResponseEntity.ok(convertService.aplicationToAplicationSendDTO(aplication));
+		}catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+	
 	@PutMapping("{id}")
 	public ResponseEntity update(@PathVariable("id") Integer id, @RequestBody AplicationNewDTO aplicationNewDto) {
 		try {

@@ -67,6 +67,16 @@ public class GoatController {
 		}
 	}
 	
+	@GetMapping("{id}")
+	public ResponseEntity findById(@PathVariable("id") Integer id) {
+		try{
+			Goat goat = goatService.readGoatByID(id);
+			return ResponseEntity.ok(convertService.goatToGoatSendDTO(goat));
+		}catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+	
 	
 	@PutMapping("{id}")
 	public ResponseEntity update(@PathVariable("id") Integer id, @RequestBody GoatNewDTO goatNewDto) {

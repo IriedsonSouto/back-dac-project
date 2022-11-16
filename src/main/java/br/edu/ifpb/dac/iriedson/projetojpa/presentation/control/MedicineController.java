@@ -64,6 +64,16 @@ public class MedicineController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity findById(@PathVariable("id") Integer id) {
+		try{
+			Medicine medicine = medicineService.readMedicineByID(id);
+			return ResponseEntity.ok(convertService.medicineToMedicineSendDTO(medicine));
+		}catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
 
 	@PutMapping("{id}")
 	public ResponseEntity update(@PathVariable("id") Integer id, @RequestBody MedicineNewDTO medicineNewDto) {

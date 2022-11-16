@@ -11,12 +11,15 @@ import org.springframework.stereotype.Service;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Aplication;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Goat;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Medicine;
+import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.User;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.AplicationNewDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.AplicationSendDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.GoatNewDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.GoatSendDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.MedicineNewDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.MedicineSendDTO;
+import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.UserNewDTO;
+import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.UserSendDTO;
 
 @Service
 public class ConvertService {
@@ -104,6 +107,33 @@ public class ConvertService {
 			aplicationsSend.add(aplicationToAplicationSendDTO(aplication));
 		}
 		return aplicationsSend;
+	}
+	
+	//Goat convert
+	public User userNewDtoToUser(UserNewDTO userNewDto) throws Exception {
+		return new User(userNewDto.getEmail()
+						,userNewDto.getName()
+						,userNewDto.getPassword());
+	}
+	
+	public User userSendDtoToUser(UserSendDTO userSendDto) throws Exception {
+		User user = new User();
+		user.setName(userSendDto.getName());
+		user.setEmail(userSendDto.getEmail());
+		
+		return user;
+	}
+	
+	public UserSendDTO userToUserSendDTO(User user) {
+		return new UserSendDTO(user);
+	}
+	
+	public List<UserSendDTO> userToUserSendDTO(List<User> users) {
+		List<UserSendDTO> usersSend = new ArrayList<>(); 
+		for(User user: users) {
+			usersSend.add(userToUserSendDTO(user));
+		}
+		return usersSend;
 	}
 	
 }
