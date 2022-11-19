@@ -1,5 +1,6 @@
 package br.edu.ifpb.dac.iriedson.projetojpa.business.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Goat;
+import br.edu.ifpb.dac.iriedson.projetojpa.model.enums.EnumGender;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.repository.GoatRepository;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.GoatNewDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.GoatSendDTO;
@@ -57,10 +59,15 @@ public class GoatService {
 	
 	public Goat updateGoat(Integer id, GoatNewDTO goatNewDto) throws Exception {
 		Goat goat = readGoatByID(id);
-		goat.setNickname(validationService.nameValidation(goatNewDto.getNickname()));
-		goat.setBirthDay(validationService.dateValidation(goatNewDto.getBirthDay()));
-		goat.setDescription(goatNewDto.getDescription());
-		goat.setGender(validationService.genderValidation(goatNewDto.getGender()));
+		String nickname = goatNewDto.getNickname()==null? goat.getNickname() : goatNewDto.getNickname();
+		Date birthDay = goatNewDto.getBirthDay()==null? goat.getBirthDay() : validationService.dateValidation(goatNewDto.getBirthDay());
+		String description = goatNewDto.getDescription()==null? goat.getDescription() : goatNewDto.getDescription();
+		EnumGender gender = goatNewDto.getGender()==null? goat.getGender() : validationService.genderValidation(goatNewDto.getGender());
+		
+		goat.setNickname(validationService.nameValidation(nickname));
+		goat.setBirthDay(birthDay);
+		goat.setDescription(description);
+		goat.setGender(gender);
 		return goatRepository.save(goat);
 	}
 	

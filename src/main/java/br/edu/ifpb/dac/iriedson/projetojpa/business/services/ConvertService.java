@@ -11,12 +11,16 @@ import org.springframework.stereotype.Service;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Aplication;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Goat;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.Medicine;
+import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.SystemRole;
+import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.User;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.AplicationNewDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.AplicationSendDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.GoatNewDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.GoatSendDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.MedicineNewDTO;
 import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.MedicineSendDTO;
+import br.edu.ifpb.dac.iriedson.projetojpa.presentation.dto.UserNewDTO;
+
 
 @Service
 public class ConvertService {
@@ -104,6 +108,43 @@ public class ConvertService {
 			aplicationsSend.add(aplicationToAplicationSendDTO(aplication));
 		}
 		return aplicationsSend;
+	}
+	
+	//Goat convert
+	public User userNewDtoToUser(UserNewDTO userNewDto){
+		return new User(userNewDto.getId()
+						,userNewDto.getEmail()
+						,userNewDto.getName()
+						,userNewDto.getUsername()
+						,userNewDto.getPassword());
+	}
+	
+	public UserNewDTO userToUserNewDto(User user){
+		UserNewDTO dto = new UserNewDTO();
+		
+		dto.setId(user.getId());
+		dto.setName(user.getName());
+		dto.setUsername(user.getUsername());
+		dto.setEmail(user.getEmail());
+		
+		List<String> roles = new ArrayList<>();
+		if(user.getRoles() != null) {
+			for (SystemRole role : user.getRoles()) {
+				roles.add(role.getName());
+			}
+		}
+		dto.setRoles(roles.toArray(new String[0]));
+		return dto; 
+	}
+	
+	
+	public List<UserNewDTO> listUserToDTO(List<User> users) {
+		List<UserNewDTO> dtos = new ArrayList<>();
+		
+		for (User user : users) {
+			dtos.add(userToUserNewDto(user));
+		}	
+		return dtos;
 	}
 	
 }
