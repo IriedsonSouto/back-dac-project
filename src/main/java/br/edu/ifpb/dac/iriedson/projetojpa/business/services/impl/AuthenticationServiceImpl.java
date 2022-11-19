@@ -2,6 +2,7 @@ package br.edu.ifpb.dac.iriedson.projetojpa.business.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,9 +28,6 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	private TokenService tokenService;
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
-	@Value("${app.logintype}")
-	private String logintype;
 	
 
 	@Override

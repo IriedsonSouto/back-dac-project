@@ -14,24 +14,24 @@ import br.edu.ifpb.dac.iriedson.projetojpa.business.services.SystemRoleService;
 @SpringBootApplication
 @EnableWebMvc
 public class ProjetoJpaApplication implements WebMvcConfigurer, CommandLineRunner{
-	
+
 	@Autowired
 	private SystemRoleService systemRoleService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoJpaApplication.class, args);
 	}
-
+	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**")
-	.allowedMethods("GET","POST","PUT","DELETE","OPTIONS","PATCH");
-		
+		registry
+			.addMapping("/**")
+			.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH");
 	}
-	
+
 	@Override
 	public void run(String... args) throws Exception {
 		systemRoleService.createDefaultValues();
 	}
-	
+
 }

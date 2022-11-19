@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private TokenService tokenService;
 	
 	@Autowired
+	@Lazy
 	private UserService userService;
 	
 	@Autowired
@@ -92,7 +94,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, "/api/isTokenValid").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/user").permitAll()
 				.antMatchers(HttpMethod.DELETE, "/api/user").permitAll()
-				.antMatchers(HttpMethod.DELETE, "/api/goat").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.name())
+				
+				.antMatchers(HttpMethod.GET, "/api/goat").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/goat/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/goat").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.toString())
+				.antMatchers(HttpMethod.PUT, "/api/goat/**").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.toString())
+				.antMatchers(HttpMethod.DELETE, "/api/goat/**").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.toString())
+				
+				.antMatchers(HttpMethod.GET, "/api/medicine").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/medicine/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/medicine").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.name())
+				.antMatchers(HttpMethod.PUT, "/api/medicine/**").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.name())
+				.antMatchers(HttpMethod.DELETE, "/api/medicine/**").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.name())
+				
+				.antMatchers(HttpMethod.GET, "/api/aplication").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/aplication/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/aplication").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.name())
+				.antMatchers(HttpMethod.PUT, "/api/aplication/**").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.name())
+				.antMatchers(HttpMethod.DELETE, "/api/aplication/**").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.name())
+				
 				.anyRequest().authenticated()	
 		.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

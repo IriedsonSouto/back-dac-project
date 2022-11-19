@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.iriedson.projetojpa.business.services.AuthenticationService;
 import br.edu.ifpb.dac.iriedson.projetojpa.business.services.PasswordEnconderService;
@@ -20,7 +22,7 @@ import br.edu.ifpb.dac.iriedson.projetojpa.model.entity.User;
 import br.edu.ifpb.dac.iriedson.projetojpa.model.repository.UserRepository;
 
 
-
+@Service
 public class UserServiceImpl implements UserService{
 
 
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private PasswordEnconderService passwordEnconderService;
 	@Autowired
+	@Lazy
 	private AuthenticationService authenticationService;
 	
 	@Override
